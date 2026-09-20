@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Times I've thought about you.</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header>
+            <h1>Times I've thought about you.</h1>
+
+            <p class="subtitle">
+                
+            </p>
+        </header>
+
+
+        <!-- GRAPH -->
+
+        <section class="chart-container">
+
+            <div id="chart"></div>
+
+        </section>
+
+
+        <!-- MESSAGE LOG -->
+
+        <section class="log-section">
+          <button id="log-toggle" class="log-toggle">
+              <span>Log</span>
+              <span id="log-arrow">▼</span>
+          </button>
+      
+          <div id="log" class="log-content collapsed"></div>
+      </section>
+
+    </main>
+
+
+    <!-- Plotly -->
+
+    <script
+        src="https://cdn.plot.ly/plotly-2.35.2.min.js">
+    </script>
+
+    <!-- Our JavaScript -->
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
