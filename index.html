@@ -19,14 +19,42 @@
 
 <body>
 
-    <main class="container">
+    <!-- PASSWORD SCREEN -->
+
+    <div id="password-screen">
+
+        <div class="password-box">
+
+            <p class="password-clue">
+                enter password. you know it.
+            </p>
+
+            <input
+                id="password-input"
+                type="password"
+                placeholder="password"
+                autocomplete="off"
+            >
+
+            <button id="password-button">
+                enter
+            </button>
+
+            <p id="password-error"></p>
+
+        </div>
+
+    </div>
+
+
+    <!-- WEBSITE -->
+
+    <main id="website" class="container hidden">
 
         <header>
             <h1>Times I've thought about you.</h1>
 
-            <p class="subtitle">
-                
-            </p>
+            <p class="subtitle"></p>
         </header>
 
 
@@ -42,13 +70,21 @@
         <!-- MESSAGE LOG -->
 
         <section class="log-section">
-          <button id="log-toggle" class="log-toggle">
-              <span>Log</span>
-              <span id="log-arrow">▼</span>
-          </button>
-      
-          <div id="log" class="log-content collapsed"></div>
-      </section>
+
+            <button id="log-toggle" class="log-toggle">
+
+                <span>Log</span>
+
+                <span id="log-arrow">▼</span>
+
+            </button>
+
+            <div
+                id="log"
+                class="log-content collapsed">
+            </div>
+
+        </section>
 
     </main>
 
@@ -58,6 +94,7 @@
     <script
         src="https://cdn.plot.ly/plotly-2.35.2.min.js">
     </script>
+
 
     <!-- Our JavaScript -->
 

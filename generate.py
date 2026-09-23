@@ -3,7 +3,7 @@ import json
 import pandas as pd
 
 DATA_FILE = Path("data.txt")
-OUTPUT_FILE = Path("data.json")
+OUTPUT_FILE = Path("site/data.json")
 
 rows = []
 

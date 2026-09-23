@@ -1,12 +1,84 @@
-async function loadData() {
+/* --------------------------------------------------
+ PASSWORD
+-------------------------------------------------- */
 
-  const response = await fetch("data.json?v=" + Date.now());
+/*
+   Change this to whatever password you want.
+*/
 
-  const data = await response.json();
+const PASSWORD = "koce boce";
 
-  createChart(data);
 
-  createLog(data);
+function setupPassword() {
+
+  const passwordScreen =
+      document.getElementById("password-screen");
+
+  const website =
+      document.getElementById("website");
+
+  const input =
+      document.getElementById("password-input");
+
+  const button =
+      document.getElementById("password-button");
+
+  const error =
+      document.getElementById("password-error");
+
+
+  function checkPassword() {
+
+      const enteredPassword =
+          input.value;
+
+
+      if (enteredPassword === PASSWORD) {
+
+          passwordScreen.style.display = "none";
+
+          website.classList.remove("hidden");
+
+          /*
+             Load the website only after
+             the correct password is entered.
+          */
+
+          loadData();
+
+      } else {
+
+          error.textContent =
+              "not quite. he always farts on the couch.";
+
+          input.value = "";
+
+          input.focus();
+      }
+  }
+
+
+  button.addEventListener(
+      "click",
+      checkPassword
+  );
+
+
+  input.addEventListener(
+      "keydown",
+      event => {
+
+          if (event.key === "Enter") {
+
+              checkPassword();
+
+          }
+
+      }
+  );
+
+
+  input.focus();
 }
 
 
@@ -14,47 +86,83 @@ async function loadData() {
  GRAPH
 -------------------------------------------------- */
 
+async function loadData() {
+
+  const response =
+      await fetch("data.json");
+
+  const data =
+      await response.json();
+
+  createChart(data);
+
+  createLog(data);
+}
+
+
 function createChart(data) {
+
   if (data.length === 0) {
+
       document.getElementById("chart").innerHTML =
           "<p>No data yet.</p>";
+
       return;
   }
 
-  const timestamps = data.map(item => item.timestamp);
-  const times = data.map(item => item.minutes);
 
-  const hoverText = data.map(item => {
-      const message = item.message
-          ? `<br>${item.message}`
-          : "";
+  const timestamps =
+      data.map(item => item.timestamp);
 
-      return `${item.display_date} ${item.time}${message}`;
-  });
+  const times =
+      data.map(item => item.minutes);
+
+
+  const hoverText =
+      data.map(item => {
+
+          const message =
+              item.message
+                  ? `<br>${item.message}`
+                  : "";
+
+          return `${item.display_date} ${item.time}${message}`;
+
+      });
+
 
   const trace = {
+
       x: timestamps,
+
       y: times,
 
       mode: "lines+markers",
+
       type: "scatter",
+
 
       line: {
           width: 1.5
       },
 
+
       marker: {
           size: 9
       },
 
+
       text: hoverText,
+
 
       hovertemplate:
           "%{text}" +
           "<extra></extra>"
   };
 
+
   const layout = {
+
       margin: {
           l: 65,
           r: 20,
@@ -62,7 +170,9 @@ function createChart(data) {
           b: 70
       },
 
+
       xaxis: {
+
           title: "Date",
 
           type: "date",
@@ -78,12 +188,15 @@ function createChart(data) {
           zeroline: false
       },
 
+
       yaxis: {
+
           title: "Time",
 
           range: [0, 1440],
 
           tickmode: "array",
+
 
           tickvals: [
               0,
@@ -101,6 +214,7 @@ function createChart(data) {
               1440
           ],
 
+
           ticktext: [
               "00:00",
               "02:00",
@@ -117,21 +231,28 @@ function createChart(data) {
               "24:00"
           ],
 
+
           gridcolor: "#eeeeee",
 
           zeroline: false
       },
 
+
       hovermode: "closest",
 
       plot_bgcolor: "#eeeeee",
+
       paper_bgcolor: "white"
   };
 
+
   const config = {
+
       responsive: true,
+
       displayModeBar: false
   };
+
 
   Plotly.newPlot(
       "chart",
@@ -148,7 +269,8 @@ function createChart(data) {
 
 function createLog(data) {
 
-  const log = document.getElementById("log");
+  const log =
+      document.getElementById("log");
 
 
   if (data.length === 0) {
@@ -160,37 +282,37 @@ function createLog(data) {
   }
 
 
-  /*
-     Group events by date.
-  */
-
   const grouped = {};
 
 
   data.forEach(item => {
 
       if (!grouped[item.date]) {
+
           grouped[item.date] = [];
+
       }
 
       grouped[item.date].push(item);
+
   });
 
 
-  /*
-     Create HTML.
-  */
-
   for (const date in grouped) {
 
-      const day = document.createElement("div");
+      const day =
+          document.createElement("div");
 
-      day.className = "day";
+      day.className =
+          "day";
 
 
-      const title = document.createElement("div");
+      const title =
+          document.createElement("div");
 
-      title.className = "day-title";
+      title.className =
+          "day-title";
+
 
       title.textContent =
           grouped[date][0].display_date;
@@ -201,23 +323,33 @@ function createLog(data) {
 
       grouped[date].forEach(item => {
 
-          const event = document.createElement("div");
+          const event =
+              document.createElement("div");
 
-          event.className = "event";
-
-
-          const time = document.createElement("div");
-
-          time.className = "event-time";
-
-          time.textContent = item.time;
+          event.className =
+              "event";
 
 
-          const message = document.createElement("div");
+          const time =
+              document.createElement("div");
 
-          message.className = "event-message";
+          time.className =
+              "event-time";
 
-          message.textContent = item.message;
+
+          time.textContent =
+              item.time;
+
+
+          const message =
+              document.createElement("div");
+
+          message.className =
+              "event-message";
+
+
+          message.textContent =
+              item.message;
 
 
           event.appendChild(time);
@@ -226,35 +358,64 @@ function createLog(data) {
 
 
           day.appendChild(event);
+
       });
 
 
       log.appendChild(day);
+
   }
+
 }
 
-function setupLogToggle() {
-  const button = document.getElementById("log-toggle");
-  const log = document.getElementById("log");
-  const arrow = document.getElementById("log-arrow");
-
-  button.addEventListener("click", () => {
-      const isCollapsed = log.classList.contains("collapsed");
-
-      if (isCollapsed) {
-          log.classList.remove("collapsed");
-          arrow.textContent = "▲";
-      } else {
-          log.classList.add("collapsed");
-          arrow.textContent = "▼";
-      }
-  });
-}
-
-setupLogToggle();
 
 /* --------------------------------------------------
- Start
+ LOG TOGGLE
 -------------------------------------------------- */
 
-loadData();
+function setupLogToggle() {
+
+  const button =
+      document.getElementById("log-toggle");
+
+  const log =
+      document.getElementById("log");
+
+  const arrow =
+      document.getElementById("log-arrow");
+
+
+  button.addEventListener(
+      "click",
+      () => {
+
+          const isCollapsed =
+              log.classList.contains("collapsed");
+
+
+          if (isCollapsed) {
+
+              log.classList.remove("collapsed");
+
+              arrow.textContent = "▲";
+
+          } else {
+
+              log.classList.add("collapsed");
+
+              arrow.textContent = "▼";
+
+          }
+
+      }
+  );
+}
+
+
+/* --------------------------------------------------
+ START
+-------------------------------------------------- */
+
+setupPassword();
+
+setupLogToggle();
