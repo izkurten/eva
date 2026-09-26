@@ -43,6 +43,12 @@ jobs:
       - name: Generate data.json
         run: |
           python generate.py
+          echo "===== data.json info ====="
+          ls -lh data.json
+          echo "===== first 20 lines ====="
+          head -20 data.json
+          echo "===== last 20 lines ====="
+          tail -20 data.json
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
